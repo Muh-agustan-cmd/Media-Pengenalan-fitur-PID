@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Media Pembelajaran PID – Papan Interaktif Digital</title>
+<style>
+:root{--bg:#f4f8ff;--card:#fff;--tx:#14213d;--mu:#5b6b8c;--pr:#2563eb;--ac:#f59e0b;--ok:#16a34a;--no:#dc2626;--bd:#dbe5fb;--hero:linear-gradient(135deg,#2563eb,#7c3aed);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1424;--card:#18213a;--tx:#eaf0ff;--mu:#9fb0d6;--bd:#2a3760;--pr:#6ea0ff}}
+:root[data-theme="dark"]{--bg:#0e1424;--card:#18213a;--tx:#eaf0ff;--mu:#9fb0d6;--bd:#2a3760;--pr:#6ea0ff}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.hero{background:var(--hero);color:#fff;text-align:center;padding:36px 16px 44px}
+.hero h1{margin:6px 0;font-size:clamp(24px,5vw,38px)}
+.hero p{margin:4px auto;max-width:640px;opacity:.92}
+.badge{display:inline-block;background:rgba(255,255,255,.2);padding:4px 14px;border-radius:99px;font-size:13px}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;gap:6px;justify-content:center;flex-wrap:wrap;padding:10px;background:var(--bg);border-bottom:1px solid var(--bd)}
+nav button{border:1px solid var(--bd);background:var(--card);color:var(--tx);padding:8px 14px;border-radius:99px;font:inherit;font-size:14px;cursor:pointer}
+nav button.on{background:var(--pr);color:#fff;border-color:var(--pr)}
+main{max-width:920px;margin:0 auto;padding:18px 14px 40px}
+section{display:none}section.on{display:block}
+h2{margin:6px 0 4px}.sub{color:var(--mu);margin:0 0 14px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:16px;margin-bottom:14px}
+.board{background:#0f1b3d;border-radius:16px;padding:10px;border:6px solid #263566}
+.screen{background:#fff;border-radius:8px;min-height:150px;padding:14px;color:#1b2a4e;text-align:center;display:flex;align-items:center;justify-content:center;font-weight:600;transition:.3s}
+.tools{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px;margin-top:10px}
+.tool{background:#1d2c5e;color:#fff;border:2px solid transparent;border-radius:12px;padding:10px 4px;cursor:pointer;font:inherit;font-size:13px}
+.tool b{display:block;font-size:24px}
+.tool.on{border-color:var(--ac);background:#33458a}
+.info{margin-top:12px;border-left:5px solid var(--ac);background:var(--card);border-radius:10px;padding:12px 14px;border:1px solid var(--bd);border-left-width:5px}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0}
+.steps li{counter-increment:s;display:flex;gap:12px;align-items:flex-start;padding:8px 0}
+.steps li::before{content:counter(s);flex:none;width:30px;height:30px;border-radius:50%;background:var(--pr);color:#fff;display:grid;place-items:center;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.flip{perspective:800px;cursor:pointer;min-height:170px}
+.fi{position:relative;height:100%;min-height:170px;transition:transform .5s;transform-style:preserve-3d}
+.flip.on .fi{transform:rotateY(180deg)}
+.fr,.bk{position:absolute;inset:0;backface-visibility:hidden;border-radius:16px;padding:14px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.fr{background:var(--card);border:1px solid var(--bd)}.fr b.e{font-size:36px}
+.bk{background:var(--hero);color:#fff;transform:rotateY(180deg);font-size:14px}
+.hint{font-size:13px;color:var(--mu)}
+.chk label{display:flex;gap:10px;padding:8px 0;border-bottom:1px dashed var(--bd);cursor:pointer}
+.bar{height:10px;background:var(--bd);border-radius:9px;overflow:hidden;margin:8px 0}
+.bar i{display:block;height:100%;width:0;background:var(--ok);transition:.4s}
+.opt{display:block;width:100%;text-align:left;margin:6px 0;padding:10px 12px;border:2px solid var(--bd);background:var(--card);color:var(--tx);border-radius:12px;font:inherit;cursor:pointer}
+.opt.ok{border-color:var(--ok);background:rgba(22,163,74,.15)}.opt.no{border-color:var(--no);background:rgba(220,38,38,.12)}
+.btn{background:var(--pr);color:#fff;border:0;border-radius:12px;padding:10px 18px;font:inherit;cursor:pointer;margin-top:8px}
+footer{text-align:center;color:var(--mu);font-size:13px;padding:0 14px 28px}
+</style>
+</head>
+<body>
+<header class="hero">
+<span class="badge">Perangkat Digital (PID) · Fitur Papan Interaktif Digital</span>
+<h1>🖥️ Belajar Papan Interaktif Digital</h1>
+<p>Kenali fitur, kelola perangkat, dan integrasikan ke dalam pembelajaran di kelas.</p>
+</header>
+<nav id="nav">
+<button class="on" data-t="s1">1 · Fitur &amp; Pengoperasian</button>
+<button data-t="s2">2 · Pengelolaan</button>
+<button data-t="s3">3 · Integrasi</button>
+<button data-t="s4">🎯 Kuis</button>
+</nav>
+<main>
+
+<section id="s1" class="on">
+<h2>Pengenalan Fitur &amp; Pengoperasian</h2>
+<p class="sub">Ketuk tombol alat pada papan di bawah untuk melihat fungsinya.</p>
+<div class="board">
+<div class="screen" id="scr">Pilih salah satu alat di bawah 👇</div>
+<div class="tools" id="tools"></div>
+</div>
+<div class="info" id="info">Setiap ikon mewakili fitur utama yang sering dipakai guru saat mengajar.</div>
+<div class="card" style="margin-top:14px">
+<h3 style="margin-top:0">Langkah Menyalakan &amp; Memakai Dasar</h3>
+<ol class="steps">
+<li><span>Pastikan kabel daya terpasang, lalu tekan tombol <b>Power</b> pada panel papan.</span></li>
+<li><span>Tunggu sistem menyala, lalu pilih <b>sumber (input)</b> sesuai kebutuhan: aplikasi bawaan, laptop (HDMI), atau layar nirkabel.</span></li>
+<li><span>Buka aplikasi <b>papan tulis</b>, sentuh layar dengan jari atau pena untuk menulis.</span></li>
+<li><span>Gunakan <b>hapus</b> dan <b>undo</b> bila ada kesalahan, lalu <b>simpan</b> hasil tulisan sebelum menutup.</span></li>
+<li><span>Matikan melalui menu <b>Shutdown</b>, bukan dengan mencabut kabel.</span></li>
+</ol>
+</div>
+</section>
+
+<section id="s2">
+<h2>Pengelolaan Perangkat Digital</h2>
+<p class="sub">Ketuk kartu untuk membalik dan melihat tips pengelolaannya.</p>
+<div class="grid" id="flips"></div>
+<div class="card chk" style="margin-top:14px">
+<h3 style="margin-top:0">✅ Daftar Periksa Harian</h3>
+<div class="hint">Centang item yang sudah dilakukan.</div>
+<div class="bar"><i id="pb"></i></div>
+<div id="cl"></div>
+<div id="cm" class="hint"></div>
+</div>
+</section>
+
+<section id="s3">
+<h2>Integrasi Perangkat Digital dalam Pembelajaran</h2>
+<p class="sub">Tiga tahap memadukan papan interaktif ke dalam kegiatan belajar (contoh: Matematika kelas IV, pecahan).</p>
+<div class="grid" id="int"></div>
+<div class="card" style="margin-top:14px">
+<h3 style="margin-top:0">💡 Prinsip Integrasi</h3>
+<p>Teknologi adalah <b>alat</b>, bukan tujuan. Mulailah dari tujuan pembelajaran, lalu pilih fitur yang paling membantu murid memahami konsep, berdiskusi, dan berpartisipasi.</p>
+</div>
+</section>
+
+<section id="s4">
+<h2>🎯 Kuis Pemahaman</h2>
+<div class="card" id="qz"></div>
+</section>
+
+</main>
+<footer>Media pembelajaran interaktif · SD Negeri 2 Lasusua</footer>
+
+<script>
+const T=[
+["✏️","Pena","Menulis atau menggambar di layar dengan jari atau stylus. Pilih warna dan ketebalan garis sesuai kebutuhan.","Tulis soal 3/4 + 1/4 ="],
+["🧽","Penghapus","Menghapus coretan tertentu. Ada juga mode hapus semua untuk membersihkan layar.","(coretan dihapus)"],
+["↩️","Undo","Membatalkan langkah terakhir bila terjadi salah tulis, tanpa menghapus seluruh halaman.","Langkah terakhir dibatalkan"],
+["🔠","Teks","Mengetik teks dengan papan ketik layar agar tulisan rapi dan mudah dibaca murid.","Pecahan Senilai"],
+["🔷","Bangun","Menyisipkan bangun datar atau garis bantu, cocok untuk menjelaskan pecahan dan geometri.","▭ ▭ ▭ ▭ (bagi 4 sama besar)"],
+["🖼️","Gambar","Menyisipkan gambar atau media dari galeri, USB, atau internet ke halaman papan tulis.","[ gambar pizza dibagi 8 ]"],
+["📄","Halaman","Menambah halaman baru atau berpindah halaman, seperti membalik lembar buku tulis.","Halaman 2 / 5"],
+["💾","Simpan","Menyimpan hasil tulisan sebagai PDF atau gambar, lalu dibagikan lewat USB atau tautan.","Tersimpan: Pecahan_Hari1.pdf"],
+["📡","Layar Nirkabel","Menampilkan layar laptop, tablet, atau HP ke papan tanpa kabel (screen mirroring).","Layar laptop guru tampil di papan"],
+["🔌","Input","Berganti sumber tampilan: HDMI, VGA, USB, atau aplikasi bawaan papan.","Sumber: HDMI 1"]
+];
+const tl=document.getElementById('tools'),scr=document.getElementById('scr'),info=document.getElementById('info');
+T.forEach((t,i)=>{const b=document.createElement('button');b.className='tool';b.innerHTML='<b>'+t[0]+'</b>'+t[1];
+b.onclick=()=>{document.querySelectorAll('.tool').forEach(x=>x.classList.remove('on'));b.classList.add('on');scr.textContent=t[3];info.innerHTML='<b>'+t[0]+' '+t[1]+'</b> – '+t[2]};tl.appendChild(b)});
+
+const F=[
+["🧼","Perawatan Layar","Bersihkan dengan kain mikrofiber kering atau sedikit lembap. Jangan semprot cairan langsung dan jangan menekan layar dengan benda tajam."],
+["🔒","Keamanan Akun","Gunakan kata sandi kuat, jangan menyimpan sandi di perangkat bersama, dan selalu keluar (logout) dari akun setelah mengajar."],
+["🗂️","Pengelolaan File","Buat folder per kelas dan mata pelajaran, beri nama file yang jelas, dan cadangkan ke HDD, flashdisk, atau penyimpanan awan."],
+["🔄","Pembaruan","Perbarui aplikasi dan sistem secara berkala agar fitur berjalan lancar dan aman dari gangguan."],
+["🛠️","Masalah Umum","Layar tidak merespons? Mulai ulang perangkat. Tidak ada tampilan? Periksa kabel dan sumber input. Lapor ke operator bila berlanjut."],
+["🔋","Daya &amp; Kabel","Matikan lewat menu Shutdown, rapikan kabel, dan hindari menaruh benda berat atau minuman di dekat perangkat."]
+];
+const fl=document.getElementById('flips');
+F.forEach(f=>{const d=document.createElement('div');d.className='flip';d.innerHTML='<div class="fi"><div class="fr"><b class="e">'+f[0]+'</b><b>'+f[1]+'</b><span class="hint">ketuk untuk membalik</span></div><div class="bk">'+f[2]+'</div></div>';d.onclick=()=>d.classList.toggle('on');fl.appendChild(d)});
+
+const C=["Periksa kabel daya dan koneksi sebelum kelas dimulai","Bersihkan layar dengan kain bersih","Pastikan pena/stylus tersedia","Uji tulisan dan sentuhan sebelum mengajar","Simpan hasil pembelajaran ke folder kelas","Logout dari akun dan tutup aplikasi","Matikan perangkat lewat menu Shutdown","Rapikan kabel dan simpan perlengkapan"];
+const cl=document.getElementById('cl'),pb=document.getElementById('pb'),cm=document.getElementById('cm');
+C.forEach(c=>{const l=document.createElement('label');l.innerHTML='<input type="checkbox"> '+c;l.firstChild.onchange=upd;cl.appendChild(l)});
+function upd(){const n=cl.querySelectorAll('input:checked').length;pb.style.width=(n/C.length*100)+'%';cm.textContent=n==C.length?'🎉 Hebat! Perangkat siap dan terawat.':n+' dari '+C.length+' selesai'}
+
+const I=[
+["1","Rencanakan","Tentukan tujuan pembelajaran, lalu pilih fitur yang mendukung. Siapkan file, gambar, dan soal di laptop sebelum kelas.","Contoh: siapkan gambar pizza untuk pecahan."],
+["2","Laksanakan","Tampilkan materi di papan, ajak murid maju menulis atau menggeser objek, dan gunakan warna untuk menandai ide penting.","Contoh: murid maju mewarnai 3/4 bagian."],
+["3","Evaluasi &amp; Refleksi","Gunakan kuis singkat, simpan catatan papan tulis, dan bagikan sebagai bahan belajar ulang.","Contoh: simpan PDF, bagikan ke grup kelas."]
+];
+const it=document.getElementById('int');
+I.forEach(x=>{it.innerHTML+='<div class="card" style="margin:0"><div style="font-size:30px;font-weight:800;color:var(--pr)">'+x[0]+'</div><h3 style="margin:4px 0">'+x[1]+'</h3><p>'+x[2]+'</p><p class="hint">'+x[3]+'</p></div>'});
+
+const Q=[
+["Apa yang sebaiknya dilakukan sebelum mematikan papan interaktif?","Mencabut kabel langsung|Menyimpan hasil lalu Shutdown lewat menu|Menekan layar kuat-kuat",1],
+["Fitur untuk menampilkan layar laptop tanpa kabel disebut…","Screen mirroring (layar nirkabel)|Penghapus|Undo",0],
+["Cara aman membersihkan layar papan adalah…","Menyemprot cairan langsung|Memakai kain mikrofiber bersih|Menggosok dengan benda tajam",1],
+["Mengapa hasil tulisan di papan perlu disimpan?","Agar bisa dibagikan dan dipelajari ulang|Supaya layar lebih terang|Tidak perlu disimpan",0],
+["Dalam integrasi pembelajaran, teknologi berfungsi sebagai…","Tujuan utama|Alat untuk mencapai tujuan belajar|Pengganti guru sepenuhnya",1]
+];
+let qi=0,sc=0;const qz=document.getElementById('qz');
+function show(){if(qi>=Q.length){qz.innerHTML='<h3>Skor kamu: '+sc+' / '+Q.length+'</h3><p>'+(sc>=4?'🌟 Luar biasa!':'💪 Ayo pelajari lagi materinya.')+'</p><button class="btn" onclick="qi=0;sc=0;show()">Ulangi</button>';return}
+const q=Q[qi],o=q[1].split('|');qz.innerHTML='<div class="hint">Soal '+(qi+1)+' dari '+Q.length+'</div><h3>'+q[0]+'</h3>';
+o.forEach((t,i)=>{const b=document.createElement('button');b.className='opt';b.textContent=t;b.onclick=()=>{qz.querySelectorAll('.opt').forEach((x,j)=>{x.disabled=true;if(j==q[2])x.classList.add('ok')});if(i==q[2])sc++;else b.classList.add('no');const n=document.createElement('button');n.className='btn';n.textContent=qi<Q.length-1?'Lanjut →':'Lihat skor';n.onclick=()=>{qi++;show()};qz.appendChild(n)};qz.appendChild(b)})}
+show();
+
+document.querySelectorAll('#nav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#nav button,section').forEach(x=>x.classList.remove('on'));b.classList.add('on');document.getElementById(b.dataset.t).classList.add('on');window.scrollTo({top:0,behavior:'smooth'})});
+</script>
+</body>
+</html>
